@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Thangame ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+        --primary: #ff1493;
+        --accent: #ffd700;
+        --glass: rgba(255, 255, 255, 0.12);
+    }
+ 
+    body {margin:0; font-family:'Poppins', sans-serif; text-align:center; color:white; overflow:hidden; background:#0f0c29;}
+    section {height:100vh; display:none; padding:40px 20px; box-sizing: border-box; position:relative; overflow-y: auto;}
+ 
+    .pulse-bg { animation: heartPulse 3s infinite ease-in-out; }
+    @keyframes heartPulse {
+        0%, 100% { background-color: #0f0c29; }
+        50% { background-color: #1a0a1a; }
+    }
+
+    #ytPlayerContainer {
+        position: absolute; width: 1px; height: 1px; left: -100px; top: -100px; opacity: 0; pointer-events: none;
+    }
+
+    #page1 {
+        display:flex; flex-direction: column; align-items: center; justify-content: center;
+        background: radial-gradient(circle at center, #2c3e50 0%, #000000 100%);
+        display: flex; /* Ensure first page is visible initially */
+    }
+
+    .glass-panel {
+        background: var(--glass); backdrop-filter: blur(15px);
+        padding: 40px 20px; border-radius: 30px;
+        border: 1px solid rgba(255,255,255,0.2);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        max-width: 450px; z-index: 2;
+    }
+
+    #page2, #page2part2, #countdownPage, #quizPage, #scorePage, #meterPage, #secretPage, #conclusionPage {
+        background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1000&q=80');
+        background-size: cover; background-position: center;
+    }
+
+    h1 {font-family: 'Pacifico', cursive; font-size: 2.2em; line-height: 1.4; margin-bottom: 20px; animation: glow 2s infinite alternate;}
+    @keyframes glow{from{text-shadow:0 0 10px white;} to{text-shadow:0 0 25px var(--primary);}}
+ 
+    .letter {
+        max-width:600px; margin:20px auto; font-size:18px; line-height:1.8;
+        text-align:left; white-space:pre-wrap; background: var(--glass);
+        padding: 25px; border-radius: 20px; backdrop-filter: blur(10px);
+    }
+
+    button { padding: 12px 35px; font-size: 18px; border: none; border-radius: 50px; cursor: pointer; margin: 15px; transition: 0.3s; font-weight: bold; }
+    #openHeartBtn { background: var(--primary); color: white; box-shadow: 0 0 20px var(--primary); }
+    .next-btn { background: white; color: var(--primary); }
+    #noBtn { background: #444; color: white; position: absolute; transition: 0.1s; z-index: 1000; }
+
+    .meter-container {
+        width: 80%; max-width: 400px; height: 30px; background: rgba(255,255,255,0.1);
+        border-radius: 15px; margin: 30px auto; border: 2px solid var(--primary); overflow: hidden;
+    }
+    .meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--accent)); box-shadow: 0 0 20px var(--primary); }
+
+    .heart { position: fixed; top: -10%; font-size: 20px; user-select: none; z-index: 1000; animation: fall linear forwards; }
+    @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+    #countdown { font-size: 2.2em; font-weight: bold; color: var(--accent); margin: 20px 0; text-shadow: 0 0 15px var(--primary); }
+
+    .quizCard {
+        background: rgba(255,255,255,0.1); border: 1px solid var(--primary); border-radius: 20px;
+        margin: 20px auto; padding: 25px; max-width: 450px; display: none; backdrop-filter: blur(10px);
+    }
+    .quizCard.active { display:block; animation: fadeIn 0.5s; }
+    .quizOption { display:block; padding:12px; margin:10px 0; border:1px solid rgba(255,255,255,0.2); border-radius:12px; cursor:pointer; background: rgba(0,0,0,0.3); transition:0.3s; text-align: left; }
+    .quizOption:hover { background: var(--primary); }
+
+    .score-circle { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--primary); margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 3em; font-weight: bold; background: rgba(255,255,255,0.05); }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+  </style>
+</head>
+<body id="mainBody">
+
+<div id="ytPlayerContainer">
+    <iframe id="videoPlayer" src="https://www.youtube.com/embed/MixuRSObqMg?enablejsapi=1&loop=1&playlist=MixuRSObqMg" frameborder="0" allow="autoplay"></iframe>
+</div>
+
+<section id="page1">
+  <div class="glass-panel">
+    <h1>Hello Thangame,<br>Happie Valentine's Day ❤️</h1>
+    <div style="font-size: 80px; margin: 10px;">🧸</div>
+    <p>I made something special just for you…</p>
+    <button id="openHeartBtn" onclick="startEverything()">Open My Heart 💖</button>
+  </div>
+</section>
+
+<section id="page2">
+  <h1>Chella Kutty... ❤️</h1>
+  <div class="letter" id="letterPart1"></div>
+  <button class="next-btn" onclick="nextPage('page2part2')">Pogalama? ➡️</button>
+</section>
+
+<section id="page2part2">
+  <h1>Oru kutty letter ❤️</h1>
+  <div class="letter">
+Every single day, I find new reasons to fall for you. Namma senthu succeed panni kamipom namma last varaikum onnave irrupom kandipa irrupom thangame.Enna eppovu vitu poiratha nee poga matanu therium 
+<br><br>
+Life can be unpredictable, but my commitment to you is absolute. Avalo love irruku unmela athu eppovu irrukum enna prblm vanthalu senthe irrupom eppovume I love you Baby.
+<br><br>
+Now and Forever Unnodu, Ash ❤️
+  </div>
+  <button class="next-btn" onclick="nextPage('countdownPage')">Aduthu... ✨</button>
+</section>
+
+<section id="countdownPage">
+  <h1>Our 1st Anniversary ❤️</h1>
+  <div id="countdown"></div>
+  <p>Until June 16, 2026</p>
+  <button class="next-btn" onclick="nextPage('quizPage')">Kutty Quiz ✍️</button>
+</section>
+
+<section id="quizPage">
+  <h1>Our Journey Quiz ❤️</h1>
+  <div id="q1" class="quizCard active">
+    <p>1) Who knew first?</p>
+    <label class="quizOption"><input type="radio" name="q1" value="0"> Ash</label>
+    <label class="quizOption"><input type="radio" name="q1" value="1"> Thangame (You)</label>
+    <button class="next-btn" onclick="nextQuestion('q1','q2')">Aduthu ➡️</button>
+  </div>
+  <div id="q2" class="quizCard">
+    <p>2) When was our first kiss?</p>
+    <label class="quizOption"><input type="radio" name="q2" value="0"> June 16</label>
+    <label class="quizOption"><input type="radio" name="q2" value="1"> June 28</label>
+    <button class="next-btn" onclick="nextQuestion('q2','q3')">Aduthu ➡️</button>
+  </div>
+  <div id="q3" class="quizCard">
+    <p>3) Who loves the most?</p>
+    <label class="quizOption"><input type="radio" name="q3" value="1"> Rendu Perum!</label>
+    <label class="quizOption"><input type="radio" name="q3" value="0"> Just Rithu</label>
+    <button class="next-btn" onclick="nextQuestion('q3','q4')">Aduthu ➡️</button>
+  </div>
+  <div id="q4" class="quizCard">
+    <p>4) Who is the dramatic one?</p>
+    <label class="quizOption"><input type="radio" name="q4" value="0"> Rithu</label>
+    <label class="quizOption"><input type="radio" name="q4" value="1"> Ash</label>
+    <button class="next-btn" onclick="nextQuestion('q4','q5')">Aduthu ➡️</button>
+  </div>
+  <div id="q5" class="quizCard">
+    <p style="font-size: 1.5em; font-weight: bold;">Will you marry me? 💍</p>
+    <div style="display: flex; justify-content: center; gap: 20px; position: relative; height: 100px; align-items: center;">
+        <button class="next-btn" onclick="showScore()" style="background: var(--primary); color: white;">YES! ❤️</button>
+        <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
+    </div>
+  </div>
+</section>
+
+<section id="scorePage">
+    <h1>Love Score Card ❤️</h1>
+    <div class="score-circle" id="finalScoreDisplay">0/5</div>
+    <button class="next-btn" onclick="startMeterPage()">Check Our Love Meter 📈</button>
+</section>
+
+<section id="meterPage">
+    <h1>Namma Kadhal Meter ❤️</h1>
+    <div id="meterPercentage" style="font-size: 3em; color: var(--accent);">0%</div>
+    <div class="meter-container">
+        <div class="meter-fill" id="meterFill" style="width: 0%;"></div>
+    </div>
+    <p id="meterStatus" style="font-size: 1.2em;"></p>
+    <button id="afterMeterBtn" class="next-btn" style="display:none;" onclick="nextPage('secretPage')">Ennoda Secret-a Pakkanuma? ✨</button>
+</section>
+
+<section id="secretPage">
+    <h1>A Gift From My Heart...</h1>
+    <p>Touch the golden heart to reveal it</p>
+    <div onclick="openSecret()" style="font-size: 120px; cursor: pointer; animation: heartbeat 1.5s infinite;" id="mainGoldHeart">💛</div>
+    <div id="secretMessageText" style="display:none; font-family:'Pacifico'; font-size:2em; color:var(--accent); margin-top:20px;">Nee dhan di en usuru thangame ❤️</div>
+    <button id="afterSecretBtn" class="next-btn" style="display:none;" onclick="nextPage('conclusionPage')">Final Message ❤️</button>
+</section>
+
+<section id="conclusionPage">
+  <h1>My Chellakutty ❤️</h1>
+  <div class="letter">Through every season, through every high and low, you stood with me and you will.I hope we'll take this till the end Your only mine Forever and ever  Happy Valentine's Day, my darling!</div>
+  <div style="font-family: 'Pacifico'; font-size: 2em; color: var(--accent); margin-top: 20px;">We'll always stay together ❤️</div>
+</section>
+
+<script>
+  let totalScore = 0;
+  const letterText = "Thangame, You are the best choice that I ever made. Nee matum dhan enaku eppovu venum eppovu you'll be my constant. I don't want to let you go in any situation, ennaku nee na avalo pudikum nee matum dhan eppovu forever mine only mine.";
+
+  function startEverything() {
+    const player = document.getElementById('videoPlayer');
+    player.src += "&autoplay=1";
+    document.getElementById('mainBody').classList.add('pulse-bg');
+    nextPage('page2');
+    createHeart();
+  }
+
+  function nextPage(id){
+    document.querySelectorAll("section").forEach(s=>s.style.display="none");
+    document.getElementById(id).style.display="block";
+    if(id=='page2') startTyping();
+  }
+
+  function startTyping(){
+    const letterDiv=document.getElementById("letterPart1");
+    if(letterDiv.innerHTML !== "") return;
+    let i=0;
+    function type(){
+        if(i < letterText.length){ 
+            letterDiv.innerHTML += letterText.charAt(i); 
+            i++; 
+            setTimeout(type, 35); 
+        }
+    }
+    type();
+  }
+
+  function updateCountdown(){
+    const countDate=new Date("June 16, 2026 00:00:00").getTime();
+    const now=new Date().getTime();
+    const distance=countDate-now;
+    const days=Math.floor(distance/(1000*60*60*24));
+    const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+    const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+    const seconds=Math.floor((distance%(1000*60))/1000);
+    document.getElementById("countdown").innerHTML=`${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  function nextQuestion(current, next){
+    const options = document.getElementsByName(current);
+    for (const opt of options) { if (opt.checked) { totalScore += parseInt(opt.value); break; } }
+    document.getElementById(current).style.display="none";
+    document.getElementById(next).classList.add("active");
+  }
+
+  function moveNoButton() {
+    const btn = document.getElementById('noBtn');
+    btn.style.position = 'fixed';
+    btn.style.left = Math.random() * (window.innerWidth - 150) + 'px';
+    btn.style.top = Math.random() * (window.innerHeight - 150) + 'px';
+  }
+
+  function showScore(){
+    totalScore += 1;
+    document.getElementById('finalScoreDisplay').innerHTML = totalScore + "/5";
+    nextPage('scorePage');
+  }
+
+  function startMeterPage() {
+    nextPage('meterPage');
+    let percent = 0;
+    const interval = setInterval(() => {
+        percent += 10;
+        if(percent > 1000) {
+            clearInterval(interval);
+            document.getElementById('meterStatus').innerHTML = "Limit-ah thandi pochu! Infinite Love! ♾️";
+            document.getElementById('afterMeterBtn').style.display = "inline-block";
+        } else {
+            document.getElementById('meterPercentage').innerHTML = percent + "%";
+            document.getElementById('meterFill').style.width = (percent / 10) + "%";
+        }
+    }, 40);
+  }
+
+  function openSecret() {
+      document.getElementById('mainGoldHeart').innerHTML = "💝";
+      document.getElementById('secretMessageText').style.display = "block";
+      document.getElementById('afterSecretBtn').style.display = "inline-block";
+  }
+
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerHTML = '❤️';
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+    setTimeout(createHeart, 400);
+  }
+</script>
+</body>
+</html>
